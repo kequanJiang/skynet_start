@@ -1,4 +1,4 @@
-include "config.path"
+root = "./skynet/"
 
 -- preload = "./examples/preload.lua"	-- run preload.lua before every lua service run
 thread = 8
