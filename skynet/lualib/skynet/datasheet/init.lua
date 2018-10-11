@@ -32,7 +32,7 @@ local function updateobject(name)
 		core.update(t.object, newhandle)
 		t.handle = newhandle
 		skynet.send(datasheet_svr, "lua", "release", handle)
-		return monitor()
+		skynet.fork(monitor)
 	end
 	skynet.fork(monitor)
 end

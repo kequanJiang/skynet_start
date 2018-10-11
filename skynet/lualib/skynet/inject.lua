@@ -18,7 +18,7 @@ local function getupvaluetable(u, func, unique)
 	end
 end
 
-return function(skynet, source, filename, args, ...)
+return function(skynet, source, filename , ...)
 	if filename then
 		filename = "@" .. filename
 	else
@@ -56,7 +56,7 @@ return function(skynet, source, filename, args, ...)
 	if not func then
 		return false, { err }
 	end
-	local ok, err = skynet.pcall(func, table.unpack(args, 1, args.n))
+	local ok, err = skynet.pcall(func)
 	if not ok then
 		table.insert(output, err)
 		return false, output

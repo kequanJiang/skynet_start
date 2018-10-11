@@ -1,4 +1,5 @@
 local skynet = require "skynet"
+local netpack = require "skynet.netpack"
 local socket = require "skynet.socket"
 local sproto = require "sproto"
 local sprotoloader = require "sprotoloader"
@@ -49,10 +50,7 @@ skynet.register_protocol {
 	unpack = function (msg, sz)
 		return host:dispatch(msg, sz)
 	end,
-	dispatch = function (fd, _, type, ...)
-		assert(fd == client_fd)	-- You can use fd to reply message
-		skynet.ignoreret()	-- session is fd, don't call skynet.ret
-		skynet.trace()
+	dispatch = function (_, _, type, ...)
 		if type == "REQUEST" then
 			local ok, result  = pcall(request, ...)
 			if ok then
@@ -94,7 +92,6 @@ end
 
 skynet.start(function()
 	skynet.dispatch("lua", function(_,_, command, ...)
-		skynet.trace()
 		local f = CMD[command]
 		skynet.ret(skynet.pack(f(...)))
 	end)

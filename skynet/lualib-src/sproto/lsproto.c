@@ -2,7 +2,6 @@
 
 #include <string.h>
 #include <stdlib.h>
-#include <math.h>
 #include "msvcint.h"
 
 #include "lua.h"
@@ -45,10 +44,10 @@ LUALIB_API void luaL_setfuncs (lua_State *L, const luaL_Reg *l, int nup) {
 #if LUA_VERSION_NUM < 503
 
 #if LUA_VERSION_NUM < 502
-static int64_t lua_tointegerx(lua_State *L, int idx, int *isnum) {
+static lua_Integer lua_tointegerx(lua_State *L, int idx, int *isnum) {
 	if (lua_isnumber(L, idx)) {
 		if (isnum) *isnum = 1;
-		return (int64_t)lua_tointeger(L, idx);
+		return lua_tointeger(L, idx);
 	}
 	else {
 		if (isnum) *isnum = 0;
@@ -166,14 +165,13 @@ encode(const struct sproto_arg *args) {
 	}
 	switch (args->type) {
 	case SPROTO_TINTEGER: {
-		int64_t v;
+		lua_Integer v;
 		lua_Integer vh;
 		int isnum;
 		if (args->extra) {
 			// It's decimal.
 			lua_Number vn = lua_tonumber(L, -1);
-			// use 64bit integer for 32bit architecture.
-			v = (int64_t)(round(vn * args->extra));
+			v = (lua_Integer)(vn * args->extra + 0.5);
 		} else {
 			v = lua_tointegerx(L, -1, &isnum);
 			if(!isnum) {
@@ -351,7 +349,7 @@ decode(const struct sproto_arg *args) {
 			vn /= args->extra;
 			lua_pushnumber(L, vn);
 		} else {
-			int64_t v = *(int64_t*)args->value;
+			lua_Integer v = *(int64_t*)args->value;
 			lua_pushinteger(L, v);
 		}
 		break;

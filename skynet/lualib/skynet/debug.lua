@@ -32,14 +32,10 @@ local function init(skynet, export)
 			skynet.ret(skynet.pack(stat))
 		end
 
-		function dbgcmd.TASK(session)
-			if session then
-				skynet.ret(skynet.pack(skynet.task(session)))
-			else
-				local task = {}
-				skynet.task(task)
-				skynet.ret(skynet.pack(task))
-			end
+		function dbgcmd.TASK()
+			local task = {}
+			skynet.task(task)
+			skynet.ret(skynet.pack(task))
 		end
 
 		function dbgcmd.INFO(...)
@@ -54,10 +50,9 @@ local function init(skynet, export)
 			skynet.exit()
 		end
 
-		function dbgcmd.RUN(source, filename, ...)
+		function dbgcmd.RUN(source, filename)
 			local inject = require "skynet.inject"
-			local args = table.pack(...)
-			local ok, output = inject(skynet, source, filename, args, export.dispatch, skynet.register_protocol)
+			local ok, output = inject(skynet, source, filename , export.dispatch, skynet.register_protocol)
 			collectgarbage "collect"
 			skynet.ret(skynet.pack(ok, table.concat(output, "\n")))
 		end
@@ -81,16 +76,6 @@ local function init(skynet, export)
 
 		function dbgcmd.LINK()
 			skynet.response()	-- get response , but not return. raise error when exit
-		end
-
-		function dbgcmd.TRACELOG(proto, flag)
-			if type(proto) ~= "string" then
-				flag = proto
-				proto = "lua"
-			end
-			skynet.error(string.format("Turn trace log %s for %s", flag, proto))
-			skynet.traceproto(proto, flag)
-			skynet.ret()
 		end
 
 		return dbgcmd

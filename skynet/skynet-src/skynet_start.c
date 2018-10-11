@@ -131,7 +131,6 @@ thread_timer(void *p) {
 	skynet_initthread(THREAD_TIMER);
 	for (;;) {
 		skynet_updatetime();
-		skynet_socket_updatetime();
 		CHECK_ABORT
 		wakeup(m,m->count-1);
 		usleep(2500);
