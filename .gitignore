@@ -1,5 +1,6 @@
 *.o
 *.a
+/skynet/skynet
 /skynet.pid
 /skynet/3rd/lua/lua
 /skynet/3rd/lua/luac
