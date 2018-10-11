@@ -1,10 +1,10 @@
 *.o
 *.a
 /skynet.pid
-3rd/lua/lua
-3rd/lua/luac
-/cservice
-/luaclib
+/skynet/3rd/lua/lua
+/skynet/3rd/lua/luac
+/skynet/cservice
+/skynet/luaclib
 *.so
 *.dSYM
 .DS_Store
