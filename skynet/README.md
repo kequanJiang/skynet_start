@@ -1,5 +1,4 @@
-## 个人研究skynet服务器项目
-## Skynet
+## ![skynet logo](https://github.com/cloudwu/skynet/wiki/image/skynet_metro.jpg)
 
 Skynet is a lightweight online game framework, and it can be used in many other fields.
 
@@ -8,7 +7,7 @@ Skynet is a lightweight online game framework, and it can be used in many other 
 For Linux, install autoconf first for jemalloc:
 
 ```
-git clone https://github.com/kequanJiang/skynet_start.git
+git clone https://github.com/cloudwu/skynet.git
 cd skynet
 make 'PLATFORM'  # PLATFORM can be linux, macosx, freebsd now
 ```
@@ -37,7 +36,7 @@ Skynet now uses a modified version of lua 5.3.4 ( https://github.com/ejoy/lua/tr
 
 You can also use official Lua versions, just edit the Makefile by yourself.
 
-## How To Use (Sorry, Only in Chinese now)
+## How To Use (Sorry, currently only available in Chinese)
 
 * Read Wiki for documents https://github.com/cloudwu/skynet/wiki
 * The FAQ in wiki https://github.com/cloudwu/skynet/wiki/FAQ
